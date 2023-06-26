@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../features/auth/authSlice";
 
-const Register = () => {
+const Register = ({isToken}) => {
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(isToken) {
+      navigate("/")
+   }
+  },[])
+
+
 
   const registerOperation = async (e) => {
     e.preventDefault();
@@ -17,9 +31,9 @@ const Register = () => {
         },
         body: JSON.stringify(registerData),
       });
-      const data = await response.json();
-      localStorage.setItem("token",data.token)
-      console.log(data);
+      const {token} = await response.json();
+      dispatch(login(token))
+
     } catch (error) {
       console.log(error);
     }

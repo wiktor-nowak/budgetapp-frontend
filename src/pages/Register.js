@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { login } from "../features/auth/authSlice";
 
-const Register = ({isToken}) => {
+const Register = () => {
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
@@ -11,15 +10,6 @@ const Register = ({isToken}) => {
   });
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(()=>{
-    if(isToken) {
-      navigate("/")
-   }
-  },[])
-
-
 
   const registerOperation = async (e) => {
     e.preventDefault();

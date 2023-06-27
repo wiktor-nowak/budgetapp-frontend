@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../features/auth/authSlice";
 import { useRegisterUserMutation } from "../features/api/userApi";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({
@@ -10,14 +11,15 @@ const Register = () => {
     password: "",
   });
   const dispatch = useDispatch();
-  const [registerUser, {isLoading, isError}] = useRegisterUserMutation();
+  const [registerUser, { isLoading, isError }] = useRegisterUserMutation();
 
   const registerOperation = async (e) => {
     e.preventDefault();
     try {
-      const {data:{token}} =await registerUser(registerData);
-      dispatch(login(token))
-
+      const {
+        data: { token },
+      } = await registerUser(registerData);
+      dispatch(login(token));
     } catch (error) {
       console.log(error);
     }
@@ -53,9 +55,12 @@ const Register = () => {
           onChange={handleChange}
         />
         <button type="submit">PRZEŚLIJ</button>
+        <p>
+          MASZ JUŻ KONTO? <Link to="/login">ZALOGUJ</Link>
+        </p>
       </form>
 
-       {isLoading && <p>Przetwarzanie.....</p>}
+      {isLoading && <p>Przetwarzanie.....</p>}
       {isError && <p>Nie udało się zarejestrować</p>}
     </>
   );

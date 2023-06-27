@@ -6,12 +6,20 @@ const ExpenseCard = ({
   expense_category,
   expense_title,
   expense_date,
-  expense_id,
+  expense_id:id,
 }) => {
-  const [deleteExpense] = useDeleteExpenseMutation();
+  const [deleteExpense, res] = useDeleteExpenseMutation();
+
+  // console.log(res)
 
   const deleteOperation = async () => {
-    const deleteResult = await deleteExpense(expense_id);
+    try {
+    const deleteResult = await deleteExpense(id);
+    console.log(deleteResult);
+    } catch (error) {
+      console.log(error.message)
+    }
+   
   };
 
   return (

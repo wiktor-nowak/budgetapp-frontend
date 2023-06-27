@@ -31,11 +31,13 @@ export const expensesApi = createApi({
       }),
     }),
     deleteExpense: builder.mutation({
-      query: (expense_id) => ({
+      query: (expense_id) => {
+        console.log(expense_id)
+        return {
         url: "expenses-delete",
-        method: "POST",
-        body: expense_id,
-      }),
+        method: "DELETE",
+        body: {id:expense_id},
+      }},
     }),
     getSum: builder.query({
       query: () => "expenses-sum",

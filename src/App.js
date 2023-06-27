@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import { useSelector } from "react-redux";
 import Login from "./pages/Login";
+import AddExpense from "./pages/AddExpense";
 
 function App() {
   const { token } = useSelector((state) => state.auth);
@@ -29,6 +30,11 @@ function App() {
             exact
             path="/login"
             element={token ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            exact
+            path="/add-expense"
+            element={token ? <AddExpense /> : <Login />}
           />
         </Routes>
       </BrowserRouter>

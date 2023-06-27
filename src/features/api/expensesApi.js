@@ -16,7 +16,18 @@ export const expensesApi = createApi({
     getExpenses: builder.query({
       query: () => "expenses",
     }),
+    addExpense: builder.mutation({
+      query: (expense_details) => ({
+        url: "expenses-add",
+        method: "POST",
+        body: expense_details,
+      }),
+    }),
+    getSum: builder.query({
+      query: () => "expenses-sum",
+    }),
   }),
 });
 
-export const { useGetExpensesQuery } = expensesApi;
+export const { useGetExpensesQuery, useAddExpenseMutation, useGetSumQuery } =
+  expensesApi;

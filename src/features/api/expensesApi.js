@@ -23,11 +23,30 @@ export const expensesApi = createApi({
         body: expense_details,
       }),
     }),
+    editExpense: builder.mutation({
+      query: (expense_details_edited) => ({
+        url: "expenses-edit",
+        method: "PATCH",
+        body: expense_details_edited,
+      }),
+    }),
+    deleteExpense: builder.mutation({
+      query: (expense_id) => ({
+        url: "expenses-delete",
+        method: "POST",
+        body: expense_id,
+      }),
+    }),
     getSum: builder.query({
       query: () => "expenses-sum",
     }),
   }),
 });
 
-export const { useGetExpensesQuery, useAddExpenseMutation, useGetSumQuery } =
-  expensesApi;
+export const {
+  useGetExpensesQuery,
+  useAddExpenseMutation,
+  useGetSumQuery,
+  useDeleteExpenseMutation,
+  useEditExpenseMutation,
+} = expensesApi;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../features/auth/authSlice";
+import { useRegisterUserMutation } from "../features/api/userApi";
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({
@@ -8,20 +9,13 @@ const Register = () => {
     email: "",
     password: "",
   });
-
   const dispatch = useDispatch();
+  const [registerUser, {isLoading, isError}] = useRegisterUserMutation();
 
   const registerOperation = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/auth/register", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(registerData),
-      });
-      const {token} = await response.json();
+      const {data:{token}} =await registerUser(registerData);
       dispatch(login(token))
 
     } catch (error) {
@@ -60,6 +54,9 @@ const Register = () => {
         />
         <button type="submit">PRZEŚLIJ</button>
       </form>
+
+       {isLoading && <p>Przetwarzanie.....</p>}
+      {isError && <p>Nie udało się zarejestrować</p>}
     </>
   );
 };

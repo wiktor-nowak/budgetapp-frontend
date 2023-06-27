@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
 import { useGetUserQuery } from "../features/api/userApi";
 import {
+  useDeleteExpenseMutation,
   useGetExpensesQuery,
   useGetSumQuery,
 } from "../features/api/expensesApi";
@@ -25,6 +26,17 @@ const Dashboard = () => {
     isError: isErrorSum,
   } = useGetSumQuery();
   console.log(balance);
+  const [deleteExpense] = useDeleteExpenseMutation();
+
+  const deleteOperation = async (id) => {
+    try {
+    const deleteResult = await deleteExpense(id);
+    refetch();
+    } catch (error) {
+      console.log(error.message)
+    }
+   
+  };
 
   useEffect(() => {
     refetch();
@@ -56,7 +68,7 @@ const Dashboard = () => {
         <p>Expenses Loading...</p>
       ) : (
         expensesData.expenses.map((expense) => (
-          <ExpenseCard key={expense.expense_id} {...expense} />
+          <ExpenseCard deleteExpense={()=>deleteOperation(expense.expense_id)} key={expense.expense_id} {...expense} />
         ))
       )}
       <p>

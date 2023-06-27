@@ -7,20 +7,13 @@ const ExpenseCard = ({
   expense_title,
   expense_date,
   expense_id:id,
+  deleteExpense
 }) => {
-  const [deleteExpense, res] = useDeleteExpenseMutation();
+
 
   // console.log(res)
 
-  const deleteOperation = async () => {
-    try {
-    const deleteResult = await deleteExpense(id);
-    console.log(deleteResult);
-    } catch (error) {
-      console.log(error.message)
-    }
-   
-  };
+
 
   return (
     <div>
@@ -33,7 +26,7 @@ const ExpenseCard = ({
       <span>Data: {expense_date}</span>
       <br />
       <button>ZMIEŃ</button>
-      <button onClick={deleteOperation}>USUŃ</button>
+      <button onClick={deleteExpense}>USUŃ</button>
       <br />
     </div>
   );

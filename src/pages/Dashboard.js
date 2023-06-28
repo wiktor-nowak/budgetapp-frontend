@@ -24,6 +24,7 @@ const Dashboard = () => {
     data: balance,
     isLoading: isLoadingSum,
     isError: isErrorSum,
+    refetch:sumRefetch
   } = useGetSumQuery();
   console.log(balance);
   const [deleteExpense] = useDeleteExpenseMutation();
@@ -40,7 +41,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     refetch();
-  }, []);
+    sumRefetch();
+  }, [expensesData]);
 
   return (
     <div>
